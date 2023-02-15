@@ -118,15 +118,14 @@ fun <T> ListItemPicker(
             ) {
                 val baseLabelModifier = Modifier.align(Alignment.Center)
                 ProvideTextStyle(textStyle) {
-                    if (indexOfElement > 0)
-                        Label(
-                            text = label(list.elementAt(indexOfElement - 1)),
-                            modifier = baseLabelModifier
-                                .offset(y = -halfNumbersColumnHeight)
-                                .alpha(maxOf(minimumAlpha, coercedAnimatedOffset / halfNumbersColumnHeightPx))
-                        )
                     Label(
-                        text = label(list.elementAt(indexOfElement)),
+                        text = label(list.elementAt(list.count() % (indexOfElement - 1))),
+                        modifier = baseLabelModifier
+                            .offset(y = -halfNumbersColumnHeight)
+                            .alpha(maxOf(minimumAlpha, coercedAnimatedOffset / halfNumbersColumnHeightPx))
+                    )
+                    Label(
+                        text = label(list.elementAt(list.count() % indexOfElement)),
                         modifier = baseLabelModifier
                             .alpha(
                                 (maxOf(
@@ -135,13 +134,12 @@ fun <T> ListItemPicker(
                                 ))
                             )
                     )
-                    if (indexOfElement < list.count() - 1)
-                        Label(
-                            text = label(list.elementAt(indexOfElement + 1)),
-                            modifier = baseLabelModifier
-                                .offset(y = halfNumbersColumnHeight)
-                                .alpha(maxOf(minimumAlpha, -coercedAnimatedOffset / halfNumbersColumnHeightPx))
-                        )
+                    Label(
+                        text = label(list.elementAt(list.count() % (indexOfElement + 1))),
+                        modifier = baseLabelModifier
+                            .offset(y = halfNumbersColumnHeight)
+                            .alpha(maxOf(minimumAlpha, -coercedAnimatedOffset / halfNumbersColumnHeightPx))
+                    )
                 }
             }
             Box(
